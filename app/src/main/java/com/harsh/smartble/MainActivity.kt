@@ -1,3 +1,4 @@
+/*
 package com.harsh.smartble
 
 import android.bluetooth.BluetoothDevice
@@ -74,3 +75,4 @@ class MainActivity : AppCompatActivity() {
 
 
 }
+*/

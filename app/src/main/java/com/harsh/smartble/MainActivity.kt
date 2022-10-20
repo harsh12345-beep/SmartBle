@@ -1,10 +1,10 @@
 package com.harsh.smartble
 
-import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.harsh.smartble.databinding.ActivityMainBinding
 import com.psp.bluetoothlibrary.Bluetooth
@@ -14,10 +14,8 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-
     private var bluetooth = Bluetooth(this)
     private var connection = Connection(this)
-
     private lateinit var connectionListener: BluetoothListener.onConnectionListener
     private lateinit var receiverListener: BluetoothListener.onReceiveListener
     private lateinit var device: BluetoothDevice
@@ -30,14 +28,12 @@ class MainActivity : AppCompatActivity() {
         }
         binding.reset.setOnClickListener {
             connection.disconnect()
+            isConnceted()
+        }
+        binding.serverStart.setOnClickListener {
             initServer()
             initListeners()
         }
-        binding.serverStart.setOnClickListener {
-           initServer()
-            initListeners()
-        }
-
     }
 
     private fun initServer() {
@@ -65,7 +61,16 @@ class MainActivity : AppCompatActivity() {
         receiverListener = BluetoothListener.onReceiveListener {
             Toast.makeText(this@MainActivity, it, Toast.LENGTH_LONG).show()
         }
-
     }
+
+    private fun isConnceted() {
+        if (connection.isConnected) {
+            Log.e("Connected", "True")
+        } else {
+            initServer()
+            initListeners()
+        }
+    }
+
 
 }
